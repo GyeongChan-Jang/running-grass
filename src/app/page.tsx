@@ -1,3 +1,5 @@
+'use client'
+
 import Link from 'next/link'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/button'
@@ -7,11 +9,11 @@ export default function HomePage() {
     <div className="min-h-screen -mx-4">
       {/* Hero Section */}
       <div className="h-[70vh] relative overflow-hidden">
-        <video autoPlay muted loop className="absolute inset-0 w-full h-full object-cover">
+        <video autoPlay muted loop playsInline className="absolute inset-0 w-full h-full object-cover">
           <source src="/video/running-video.mp4" type="video/mp4" />
         </video>
         <div className="absolute inset-0 bg-black/40" />
-        <div className="relative z-10 h-full flex flex-col justify-end p-6 max-w-[600px] mx-auto">
+        <div className="relative z-10 h-full flex flex-col justify-end p-10 max-w-[600px] mx-auto">
           <h1 className="text-4xl font-bold text-white mb-2">
             매일의 러닝을
             <br />
@@ -26,7 +28,7 @@ export default function HomePage() {
       </div>
 
       {/* Features Section */}
-      <div className="max-w-[600px] mx-auto px-4">
+      <div className="max-w-[600px] mx-auto px-10">
         <div className="py-12 space-y-12">
           <div className="space-y-4">
             <h2 className="text-2xl font-bold">러닝 기록을 시각화</h2>

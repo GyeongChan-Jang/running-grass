@@ -1,7 +1,7 @@
 'use client'
 
-import ProfileInfo from '@/components/ProfileInfo'
-import ActivityGrid from '@/components/ActivityGrid'
+import ProfileInfo from './ProfileInfo'
+import ActivityGrid from './ActivityGrid'
 
 export default function ProfileContent() {
   return (
