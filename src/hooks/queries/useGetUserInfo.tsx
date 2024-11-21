@@ -1,7 +1,9 @@
 import { stravaApi } from '@/lib/strava'
 import { useUserStore } from '@/store/user'
+import { UseQueryCustomOptions } from '@/types/common'
 import { StravaUserInfo } from '@/types/strava'
 import { useQuery } from '@tanstack/react-query'
+import { AxiosError } from 'axios'
 
 const getUserInfo = async (accessToken: string) => {
   try {
@@ -22,7 +24,7 @@ const getUserInfo = async (accessToken: string) => {
   }
 }
 
-export const useGetUserInfo = () => {
+export const useGetUserInfo = (queryOptions?: UseQueryCustomOptions<StravaUserInfo, AxiosError>) => {
   const { accessToken } = useUserStore()
 
   if (!accessToken) {
@@ -31,6 +33,7 @@ export const useGetUserInfo = () => {
 
   return useQuery({
     queryKey: ['userInfo'],
-    queryFn: () => getUserInfo(accessToken)
+    queryFn: () => getUserInfo(accessToken),
+    ...queryOptions
   })
 }

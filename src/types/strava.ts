@@ -79,4 +79,30 @@ interface StravaUserInfo {
   follower: boolean | null
 }
 
-export type { StravaActivity, StravaUserInfo }
+interface ActivityTotals {
+  count: number
+  distance: number
+  moving_time: number
+  elapsed_time: number
+  elevation_gain: number
+}
+
+interface ActivityTotalsWithAchievements extends ActivityTotals {
+  achievement_count: number
+}
+
+interface StravaStats {
+  biggest_ride_distance: number
+  biggest_climb_elevation_gain: number
+  recent_ride_totals: ActivityTotalsWithAchievements
+  all_ride_totals: ActivityTotals
+  recent_run_totals: ActivityTotalsWithAchievements
+  all_run_totals: ActivityTotals
+  recent_swim_totals: ActivityTotalsWithAchievements
+  all_swim_totals: ActivityTotals
+  ytd_ride_totals: ActivityTotals
+  ytd_run_totals: ActivityTotals
+  ytd_swim_totals: ActivityTotals
+}
+
+export type { StravaActivity, StravaUserInfo, StravaStats }

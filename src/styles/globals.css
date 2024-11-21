@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --primary: #000000;
+  --primary: #334155;
   --secondary: #666666;
   --accent: #ff2e2e;
 }

@@ -1,5 +1,6 @@
 import { stravaApi } from '@/lib/strava'
 import { useUserStore } from '@/store/user'
+import { UseQueryCustomOptions } from '@/types/common'
 import { StravaActivity } from '@/types/strava'
 import { useQuery } from '@tanstack/react-query'
 
@@ -30,7 +31,7 @@ const getActivities = async (accessToken: string, params: StravaActivityParams) 
   }
 }
 
-export const useGetActivity = (params?: StravaActivityParams) => {
+export const useGetActivity = (params?: StravaActivityParams, queryOptions?: UseQueryCustomOptions) => {
   const { accessToken } = useUserStore()
 
   if (!accessToken) {
@@ -39,6 +40,7 @@ export const useGetActivity = (params?: StravaActivityParams) => {
 
   return useQuery({
     queryKey: ['activities', params],
-    queryFn: () => getActivities(accessToken, params || {})
+    queryFn: () => getActivities(accessToken, params || {}),
+    ...queryOptions
   })
 }
