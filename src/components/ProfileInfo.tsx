@@ -6,7 +6,6 @@ import { LogOut } from 'lucide-react'
 import { useUserStore } from '@/store/user'
 import { useGetUserInfo } from '@/hooks/queries/useGetUserInfo'
 import { useEffect } from 'react'
-import { useGetActivity } from '@/hooks/queries/useGetActivity'
 import { logout } from '@/app/auth'
 import { Skeleton } from './ui/skeleton'
 import { useGetStats } from '@/hooks/queries/useGetStats'
@@ -15,6 +14,8 @@ import { ProfileError } from './errors/ProfileError'
 import { useQueryError } from '@/hooks/useQueryError'
 import { ConfirmAlert } from '@/components/ui/ConfirmAlert'
 import { toast } from '@/hooks/use-toast'
+import { ActivityHeatmap } from './ActivityHeatmap'
+import { useGetActivities } from '@/hooks/queries/useGetActivities'
 
 function ProfileSkeleton() {
   return (
@@ -70,7 +71,9 @@ function ProfileInfo() {
     ...onFailure
   })
 
-  const { data: activities, isLoading: isActivitiesLoading, error: activitiesError } = useGetActivity()
+  const { data: activities, isLoading: isActivitiesLoading } = useGetActivities({
+    ...onFailure
+  })
 
   const { data: stats, isLoading: isStatsLoading } = useGetStats(data?.id, {
     ...onFailure
@@ -159,6 +162,7 @@ function ProfileInfo() {
           </p>
         </div>
       </div>
+      {activities && <ActivityHeatmap activities={activities} />}
     </div>
   )
 }

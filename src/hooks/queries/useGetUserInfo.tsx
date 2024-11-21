@@ -5,7 +5,7 @@ import { StravaUserInfo } from '@/types/strava'
 import { useQuery } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 
-const getUserInfo = async (accessToken: string) => {
+const getUserInfo = async (accessToken: string | null) => {
   try {
     const response = await stravaApi.get<StravaUserInfo>('/athlete', {
       headers: {
