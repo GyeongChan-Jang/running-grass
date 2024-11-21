@@ -16,6 +16,7 @@ import { ConfirmAlert } from '@/components/ui/ConfirmAlert'
 import { toast } from '@/hooks/use-toast'
 import { ActivityHeatmap } from './ActivityHeatmap'
 import { useGetActivities } from '@/hooks/queries/useGetActivities'
+import Image from 'next/image'
 
 function ProfileSkeleton() {
   return (
@@ -64,14 +65,14 @@ export default function ProfileInfoWrapper() {
 
 function ProfileInfo() {
   const router = useRouter()
-  const { user, setUser } = useUserStore()
+  const { setUser } = useUserStore()
   const { onFailure } = useQueryError()
 
-  const { data, isLoading, error } = useGetUserInfo({
+  const { data, isLoading } = useGetUserInfo({
     ...onFailure
   })
 
-  const { data: activities, isLoading: isActivitiesLoading } = useGetActivities({
+  const { data: activities } = useGetActivities({
     ...onFailure
   })
 
@@ -113,7 +114,18 @@ function ProfileInfo() {
     <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
       <div className="flex items-center justify-between mb-6">
         <div className="flex items-center gap-4">
-          {data?.profile && <img src={data.profile} alt="Profile" className="w-16 h-16 rounded-full object-cover" />}
+          {data?.profile && (
+            <div className="relative w-16 h-16">
+              <Image
+                src={data.profile}
+                alt="Profile"
+                fill
+                sizes="64px"
+                className="rounded-full object-cover"
+                priority
+              />
+            </div>
+          )}
           <div>
             <h1 className="text-xl font-bold text-gray-900 dark:text-white">
               {data?.firstname} {data?.lastname}

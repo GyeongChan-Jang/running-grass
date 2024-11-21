@@ -1,5 +1,5 @@
 import { StravaActivity } from '@/types/strava'
-import { format, parseISO, eachDayOfInterval, subYears, startOfYear, endOfYear } from 'date-fns'
+import { format, parseISO, eachDayOfInterval, startOfYear, endOfYear } from 'date-fns'
 import { useMemo } from 'react'
 
 interface ActivityHeatmapProps {
