@@ -1,0 +1,11 @@
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "run-daily.app",
+        "paths": ["/api/auth/strava/callback*"]
+      }
+    ]
+  }
+} 

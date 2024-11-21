@@ -117,7 +117,7 @@ function ProfileInfo() {
           {data?.profile && (
             <div className="relative w-16 h-16">
               <Image
-                src={data.profile}
+                src={data.profile || '/images/profile-default.png'}
                 alt="Profile"
                 fill
                 sizes="64px"

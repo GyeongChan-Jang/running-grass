@@ -1,13 +1,11 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
-import { getStravaAuthUrl } from '@/lib/strava'
+import { login } from '@/app/auth'
 
 export default function LoginPage() {
   const handleStravaLogin = () => {
-    const authUrl = getStravaAuthUrl()
-
-    window.location.href = authUrl
+    login()
   }
 
   return (
