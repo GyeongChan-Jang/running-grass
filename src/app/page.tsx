@@ -38,7 +38,7 @@ export default function HomePage() {
           </div>
 
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold">🏆 재비로 보는 러너 등급 정보</h2>
+            <h2 className="text-2xl font-bold">🏆 재미로 보는 러너 등급 정보</h2>
             <p className="text-secondary">
               누적 달리기 거리에 따라 🏅메달이 부여됩니다. <br />
               런린이부터 런고수까지, 당신의 성장을 확인하세요.
