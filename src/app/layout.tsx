@@ -6,6 +6,7 @@ import { ThemeToggle } from '@/components/theme-toggle'
 import { cn } from '@/lib/utils'
 
 import '@/styles/globals.css'
+import { Toaster } from '@/components/ui/toaster'
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   const queryClient = new QueryClient({
@@ -31,6 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </div>
             </div>
           </QueryClientProvider>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

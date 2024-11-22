@@ -157,7 +157,7 @@ function ProfileInfo({ stats, isStatsLoading }: { stats: StravaStats | undefined
       await logout()
       toast({
         title: '로그아웃 성공',
-        description: '성공적으로 로그아웃되었습니다.'
+        description: '성공적으로 로그아웃 되었습니다.'
       })
       router.replace('/')
     } catch (error) {
@@ -190,8 +190,8 @@ function ProfileInfo({ stats, isStatsLoading }: { stats: StravaStats | undefined
               {data?.firstname} {data?.lastname}
             </h1>
             {data?.username && <p className="text-gray-600 dark:text-gray-400">@{data?.username}</p>}
-            <div className="flex items-center gap-2">
-              {data?.city && <p className="text-gray-600 dark:text-gray-400">{data?.city}</p>}
+            <div className="flex items-center gap-1">
+              {data?.city && <p className="text-gray-600 dark:text-gray-400">{data?.city},</p>}
               {data?.country && <p className="text-gray-600 dark:text-gray-400">{data?.country}</p>}
             </div>
           </div>
