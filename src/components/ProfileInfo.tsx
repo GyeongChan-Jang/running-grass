@@ -80,8 +80,6 @@ function ProfileInfo() {
     ...onFailure
   })
 
-  console.log(stats)
-
   useEffect(() => {
     if (data) setUser(data)
   }, [data, setUser])
@@ -89,12 +87,11 @@ function ProfileInfo() {
   const handleLogout = async () => {
     try {
       await logout()
-      router.replace('/')
       toast({
         title: '로그아웃 성공',
         description: '성공적으로 로그아웃되었습니다.'
       })
-      router.push('/')
+      router.replace('/')
     } catch (error) {
       console.error('Failed to logout:', error)
       toast({

@@ -1,6 +1,9 @@
 'use client'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ThemeProvider } from '@/components/theme-provider'
+import { ThemeToggle } from '@/components/theme-toggle'
+import { cn } from '@/lib/utils'
 
 import '@/styles/globals.css'
 
@@ -8,18 +11,27 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        retry: 1, // 재시도 횟수
-        staleTime: 5 * 60 * 1000, // 5분
+        retry: 1,
+        staleTime: 5 * 60 * 1000,
         refetchOnWindowFocus: false,
-        throwOnError: true // ErrorBoundary가 에러를 잡을 수 있도록
+        throwOnError: true
       }
     }
   })
 
   return (
-    <html lang="ko" suppressHydrationWarning>
-      <body className="min-h-full bg-gray-50 dark:bg-gray-900" suppressHydrationWarning>
-        <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+    <html lang="en" suppressHydrationWarning>
+      <body className={cn('min-h-screen bg-background font-sans antialiased', 'transition-colors duration-300')}>
+        <ThemeProvider>
+          <QueryClientProvider client={queryClient}>
+            <div className="relative">
+              {children}
+              <div className="fixed top-4 right-4 z-50">
+                <ThemeToggle />
+              </div>
+            </div>
+          </QueryClientProvider>
+        </ThemeProvider>
       </body>
     </html>
   )
