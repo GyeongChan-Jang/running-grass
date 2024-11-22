@@ -4,29 +4,38 @@ import { UseQueryCustomOptions } from '@/types/common'
 import { StravaActivity } from '@/types/strava'
 import { useQuery } from '@tanstack/react-query'
 
-const getActivities = async (accessToken: string | null) => {
+const PER_PAGE = 200
+
+interface GetActivitiesParams {
+  per_page: number
+}
+
+const getActivities = async (accessToken: string | null, params: GetActivitiesParams) => {
   if (!accessToken) {
     throw new Error('Access Token이 유효하지 않습니다!')
   }
 
-  const response = await stravaApi.get<StravaActivity[]>('/athlete/activities', {
-    headers: {
-      Authorization: `Bearer ${accessToken}`
-    },
-    params: {
-      per_page: 200 // 최대한 많은 활동을 가져옴
-    }
-  })
+  try {
+    const response = await stravaApi.get<StravaActivity[]>('/athlete/activities', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      },
+      params
+    })
 
-  return response.data
+    return response.data
+  } catch (error) {
+    console.error('Failed to get activities:', error)
+    throw error
+  }
 }
 
-export const useGetActivities = (queryOptions?: UseQueryCustomOptions<StravaActivity[]>) => {
+export const useGetActivities = (queryOptions?: Partial<UseQueryCustomOptions<StravaActivity[]>>) => {
   const { accessToken } = useUserStore()
 
   return useQuery({
     queryKey: ['activities'],
-    queryFn: () => getActivities(accessToken),
+    queryFn: () => getActivities(accessToken, { per_page: PER_PAGE }),
     ...queryOptions
   })
 }

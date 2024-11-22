@@ -72,10 +72,6 @@ function ProfileInfo() {
     ...onFailure
   })
 
-  const { data: activities } = useGetActivities({
-    ...onFailure
-  })
-
   const { data: stats, isLoading: isStatsLoading } = useGetStats(data?.id, {
     ...onFailure
   })
@@ -171,7 +167,7 @@ function ProfileInfo() {
           </p>
         </div>
       </div>
-      {activities && <ActivityHeatmap activities={activities} />}
+      {/* {activities && <ActivityHeatmap activities={activities} />} */}
     </div>
   )
 }
