@@ -4,14 +4,21 @@ import ProfileInfo from '@/components/ProfileInfo'
 import ActivityGrid from '@/components/ActivityGrid'
 import { useGetActivities } from '@/hooks/queries/useGetActivities'
 import { useQueryError } from '@/hooks/useQueryError'
+import { useGetStats } from '@/hooks/queries/useGetStats'
+import { useUserStore } from '@/store/user'
 
 export default function ProfileContent() {
   const { onFailure } = useQueryError()
+  const { user } = useUserStore()
   const {
     data: activities,
     isLoading,
     isError
   } = useGetActivities({
+    ...onFailure
+  })
+
+  const { data: stats, isLoading: isStatsLoading } = useGetStats(user?.id, {
     ...onFailure
   })
 
@@ -25,8 +32,12 @@ export default function ProfileContent() {
 
   return (
     <div className="container mx-auto max-w-[600px] px-4 py-8 space-y-8">
-      <ProfileInfo />
-      <ActivityGrid activities={activities || []} isLoading={isLoading} />
+      <ProfileInfo stats={stats} isStatsLoading={isStatsLoading} />
+      <ActivityGrid
+        totalDistance={stats?.all_run_totals.distance}
+        activities={activities || []}
+        isLoading={isLoading}
+      />
     </div>
   )
 }

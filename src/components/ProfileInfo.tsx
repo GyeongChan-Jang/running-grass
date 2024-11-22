@@ -8,15 +8,13 @@ import { useGetUserInfo } from '@/hooks/queries/useGetUserInfo'
 import { useEffect } from 'react'
 import { logout } from '@/app/auth'
 import { Skeleton } from './ui/skeleton'
-import { useGetStats } from '@/hooks/queries/useGetStats'
 import { ErrorBoundary } from './errors/ErrorBoundary'
 import { ProfileError } from './errors/ProfileError'
 import { useQueryError } from '@/hooks/useQueryError'
 import { ConfirmAlert } from '@/components/ui/ConfirmAlert'
 import { toast } from '@/hooks/use-toast'
-import { ActivityHeatmap } from './ActivityHeatmap'
-import { useGetActivities } from '@/hooks/queries/useGetActivities'
 import Image from 'next/image'
+import { StravaStats } from '@/types/strava'
 
 function ProfileSkeleton() {
   return (
@@ -55,24 +53,98 @@ function ProfileSkeleton() {
   )
 }
 
-export default function ProfileInfoWrapper() {
+export default function ProfileInfoWrapper({
+  stats,
+  isStatsLoading
+}: {
+  stats: StravaStats | undefined
+  isStatsLoading: boolean
+}) {
   return (
     <ErrorBoundary fallback={<ProfileError />}>
-      <ProfileInfo />
+      <ProfileInfo stats={stats} isStatsLoading={isStatsLoading} />
     </ErrorBoundary>
   )
 }
 
-function ProfileInfo() {
+// 메달 컴포넌트 추가
+export function MedalProfile({ distance, profileUrl }: { distance: number; profileUrl: string }) {
+  const getMedalStyle = (distance: number) => {
+    if (distance >= 3000) {
+      return {
+        border: 'border-yellow-200 dark:border-yellow-200',
+        glow: 'shadow-[0_0_20px_rgba(250,204,21,0.9)] dark:shadow-[0_0_20px_rgba(234,179,8,0.9)]',
+        ribbon: 'from-yellow-500 to-yellow-600',
+        label: '런고수'
+      }
+    }
+    if (distance >= 1000) {
+      return {
+        border: 'border-gray-300 dark:border-gray-500',
+        glow: 'shadow-[0_0_20px_rgba(156,163,175,0.8)] dark:shadow-[0_0_20px_rgba(156,163,175,0.9)]',
+        ribbon: 'from-gray-400 to-gray-500',
+        label: '런중수'
+      }
+    }
+    return {
+      border: 'border-orange-400 dark:border-orange-400',
+      glow: 'shadow-[0_0_20px_rgba(251,146,60,0.9)] dark:shadow-[0_0_20px_rgba(249,115,22,0.9)]',
+      ribbon: 'from-orange-600 to-orange-600',
+      label: '런린이'
+    }
+  }
+
+  const medalStyle = getMedalStyle(distance)
+
+  return (
+    <div className="relative inline-flex flex-col items-center">
+      {/* 메달 리본 */}
+      <div
+        className={`absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-10 
+          bg-gradient-to-b ${medalStyle.ribbon} rounded-t-sm z-10`}
+      />
+
+      {/* 메달 테두리와 이미지 */}
+      <div
+        className={`relative w-20 h-20 rounded-full 
+          border-[6px] ${medalStyle.border}
+          ${medalStyle.glow}
+          bg-white dark:bg-gray-800
+          overflow-hidden
+          z-20
+          transition-all duration-300
+          hover:scale-105`}
+      >
+        <Image
+          src={profileUrl || '/images/profile-default.png'}
+          alt="Profile"
+          fill
+          sizes="80px"
+          className="rounded-full object-cover"
+          priority
+        />
+      </div>
+
+      {/* 메달 등급 라벨 */}
+      <div
+        className={`absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap
+          bg-white dark:bg-gray-800 px-3 py-1 rounded-full
+          text-xs font-bold
+          ${medalStyle.border.replace('border-', 'text-')}
+          shadow-lg z-30`}
+      >
+        {medalStyle.label}
+      </div>
+    </div>
+  )
+}
+
+function ProfileInfo({ stats, isStatsLoading }: { stats: StravaStats | undefined; isStatsLoading: boolean }) {
   const router = useRouter()
   const { setUser } = useUserStore()
   const { onFailure } = useQueryError()
 
   const { data, isLoading } = useGetUserInfo({
-    ...onFailure
-  })
-
-  const { data: stats, isLoading: isStatsLoading } = useGetStats(data?.id, {
     ...onFailure
   })
 
@@ -106,18 +178,12 @@ function ProfileInfo() {
   return (
     <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-6">
           {data?.profile && (
-            <div className="relative w-16 h-16">
-              <Image
-                src={data.profile || '/images/profile-default.png'}
-                alt="Profile"
-                fill
-                sizes="64px"
-                className="rounded-full object-cover"
-                priority
-              />
-            </div>
+            <MedalProfile
+              distance={Math.round((stats?.all_run_totals.distance || 0) / 1000)}
+              profileUrl={data.profile}
+            />
           )}
           <div>
             <h1 className="text-xl font-bold text-gray-900 dark:text-white">
