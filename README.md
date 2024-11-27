@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Run Daily 🏃‍♂️
 
-## Getting Started
+A web service that visualizes your running records like GitHub's contribution graph.
 
-First, run the development server:
+## 📱 Screenshots
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<div style="display: flex; gap: 10px; flex-wrap: wrap;">
+  <img src="https://github.com/user-attachments/assets/d90b274f-facf-4e3a-8cce-22debd482d4c" width="400" alt="Main Video" />
+  <img src="https://github.com/user-attachments/assets/4a2aa8f7-e5a7-4ac8-9039-005e9d98d899" width="400" alt="Main Page" />
+</div>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+<div style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px;">
+  <img src="https://github.com/user-attachments/assets/2b89e48f-60f7-4d3d-9e4c-ddaaa370af49" width="400" alt="Login Page" />
+  <img src="https://github.com/user-attachments/assets/c4076baa-10ce-47b6-987c-07ef73f4c8c4" width="400" alt="Profile Page" />
+</div>
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## ✨ Key Features
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- **Running Statistics Visualization**
+  - Display running records in a calendar format like GitHub's contribution graph
+  - Provide monthly and yearly running statistics
+- **Strava Integration**
+  - Easy login with Strava account
+  - Real-time running data synchronization
+- **Image Sharing**
+  - Save running records as images
+  - Social media sharing functionality
+- **Running Goal Management**
+  - Set personal running goals
+  - Real-time goal achievement tracking
+- **Dark Mode**
+  - Automatic theme switching based on system settings
+  - Manual theme toggle support
 
-## Learn More
+## 🛠️ Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+### Frontend
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Next.js](https://nextjs.org/) - React Framework
+- [Tailwind CSS](https://tailwindcss.com/) - CSS Framework
+- [Shadcn UI](https://ui.shadcn.com/) - UI Component Library
+- [Lucide](https://lucide.dev/) - Icon Library
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### State Management & Data Fetching
 
-## Deploy on Vercel
+- [React Query](https://tanstack.com/query/latest) - Server State Management
+- [Zustand](https://zustand-demo.pmnd.rs/) - Client State Management
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Error Handling
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- [React Error Boundary](https://react.dev/reference/react/Component#catching-rendering-errors-with-an-error-boundary) - Error Handling
+
+### API Integration
+
+- [Strava API](https://developers.strava.com/) - Running Data Integration
+
+## Reference
+
+![strava-auth](https://github.com/user-attachments/assets/be7b4f83-4e37-4d82-9862-535a0fd9f41c)
+
+[Strava API](https://developers.strava.com/docs/reference/#api-Activities-getActivityById)
+
+[Strava Developer Community Hub](https://communityhub.strava.com/)
