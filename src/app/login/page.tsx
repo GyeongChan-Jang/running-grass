@@ -27,7 +27,9 @@ export default function LoginPage() {
       <div className="relative z-10 w-full max-w-md p-8">
         <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-white/20">
           <div className="text-center space-y-4 mb-8">
-            <h2 className="text-3xl font-bold text-white whitespace-nowrap">러닝 기록을 시작하세요</h2>
+            <h2 className="sm:text-2xl md:text-3xl text-xl font-bold text-white whitespace-nowrap">
+              러닝 기록을 시작하세요
+            </h2>
             <p className="text-gray-100 font-semibold text-md">
               Strava 계정으로 로그인하고
               <br />

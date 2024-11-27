@@ -96,6 +96,10 @@ export function MedalProfile({ distance, profileUrl }: { distance: number; profi
 
   const medalStyle = getMedalStyle(distance)
 
+  const getValidImageUrl = (url: string) => {
+    return url.includes('https://') ? url : '/images/profile-default.png'
+  }
+
   return (
     <div className="relative inline-flex flex-col items-center">
       {/* 메달 리본 */}
@@ -116,7 +120,7 @@ export function MedalProfile({ distance, profileUrl }: { distance: number; profi
           hover:scale-105`}
       >
         <Image
-          src={profileUrl || '/images/profile-default.png'}
+          src={getValidImageUrl(profileUrl)}
           alt="Profile"
           fill
           sizes="80px"
@@ -143,6 +147,8 @@ function ProfileInfo({ stats, isStatsLoading }: { stats: StravaStats | undefined
   const router = useRouter()
   const { setUser } = useUserStore()
   const { onFailure } = useQueryError()
+
+  console.log(stats)
 
   const { data, isLoading } = useGetUserInfo({
     ...onFailure
@@ -189,9 +195,14 @@ function ProfileInfo({ stats, isStatsLoading }: { stats: StravaStats | undefined
               {data?.firstname} {data?.lastname}
             </h1>
             {data?.username && <p className="text-gray-600 dark:text-gray-400">@{data?.username}</p>}
-            <div className="flex items-center gap-1">
-              {data?.city && <p className="text-gray-600 dark:text-gray-400">{data?.city},</p>}
-              {data?.country && <p className="text-gray-600 dark:text-gray-400">{data?.country}</p>}
+            <div className="flex xs:flex-col items-center xs:items-start">
+              {data?.city && (
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  {data?.city}
+                  {!data?.country && ','}
+                </p>
+              )}
+              {data?.country && <p className="text-sm text-gray-600 dark:text-gray-400">{data?.country}</p>}
             </div>
           </div>
         </div>
@@ -212,23 +223,29 @@ function ProfileInfo({ stats, isStatsLoading }: { stats: StravaStats | undefined
         />
       </div>
       <hr className="my-6 border-gray-200 dark:border-gray-700" />
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-4 sm:grid-cols-2 xs:grid-cols-2 gap-4">
         <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">총 러닝</p>
-          <p className="text-md font-bold text-gray-900 dark:text-white text-center">
+          <p className="text-md text-gray-500 dark:text-gray-400 mb-1 font-semibold">총 러닝 🏃‍♂️</p>
+          <p className="text-md xs:text-sm font-bold text-gray-900 dark:text-white text-center">
             {stats?.all_run_totals.count || 0}회
           </p>
         </div>
         <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">총 거리</p>
-          <p className="text-md font-bold text-gray-900 dark:text-white text-center">
+          <p className="text-md text-gray-500 dark:text-gray-400 mb-1 font-semibold">총 거리 </p>
+          <p className="text-md xs:text-sm font-bold text-gray-900 dark:text-white text-center">
             {Math.round((stats?.all_run_totals.distance || 0) / 1000).toLocaleString()}km
           </p>
         </div>
         <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg text-center">
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-1">총 시간</p>
-          <p className="text-md font-bold text-gray-900 dark:text-white text-center">
+          <p className="text-md text-gray-500 dark:text-gray-400 mb-1 font-semibold">총 시간 🕒</p>
+          <p className="text-md xs:text-sm font-bold text-gray-900 dark:text-white text-center">
             {Math.round((stats?.all_run_totals.elapsed_time || 0) / 3600).toLocaleString()}h
+          </p>
+        </div>
+        <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg text-center">
+          <p className="text-md text-gray-500 dark:text-gray-400 mb-1 font-semibold">총 고도 ⛰️</p>
+          <p className="text-md xs:text-sm font-bold text-gray-900 dark:text-white text-center">
+            {Math.round((stats?.all_run_totals.elevation_gain || 0) / 1000).toLocaleString()}km
           </p>
         </div>
       </div>

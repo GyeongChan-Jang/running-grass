@@ -9,6 +9,10 @@ export default {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: { max: '400px' }, // @media (max-width: 400px)
+        sm: { min: '400px', max: '640px' } // @media (min-width: 400px) and (max-width: 640px)
+      },
       gridTemplateColumns: {
         53: 'repeat(53, minmax(0, 1fr))'
       },
