@@ -97,8 +97,24 @@ export function MedalProfile({ distance, profileUrl }: { distance: number; profi
   const medalStyle = getMedalStyle(distance)
 
   const getValidImageUrl = (url: string) => {
-    return url.includes('https://') ? url : '/images/profile-default.png'
+    if (!url) return '/images/profile-default.png'
+
+    // Facebook 프로필 이미지 처리
+    if (url.includes('graph.facebook.com')) {
+      return `https://graph.facebook.com/${url.split('/')[4].split('?')[0]}/picture?height=256&width=256`
+    }
+
+    try {
+      new URL(url)
+      return url
+    } catch {
+      // 상대 경로인 경우 그대로 사용
+      if (url.startsWith('/')) return url
+      return '/images/profile-default.png'
+    }
   }
+
+  const validProfileUrl = getValidImageUrl(profileUrl)
 
   return (
     <div className="relative inline-flex flex-col items-center">
@@ -119,14 +135,7 @@ export function MedalProfile({ distance, profileUrl }: { distance: number; profi
           transition-all duration-300
           hover:scale-105`}
       >
-        <Image
-          src={getValidImageUrl(profileUrl)}
-          alt="Profile"
-          fill
-          sizes="80px"
-          className="rounded-full object-cover"
-          priority
-        />
+        <Image src={validProfileUrl} alt="Profile" fill sizes="80px" className="rounded-full object-cover" priority />
       </div>
 
       {/* 메달 등급 라벨 */}
@@ -147,8 +156,6 @@ function ProfileInfo({ stats, isStatsLoading }: { stats: StravaStats | undefined
   const router = useRouter()
   const { setUser } = useUserStore()
   const { onFailure } = useQueryError()
-
-  console.log(stats)
 
   const { data, isLoading } = useGetUserInfo({
     ...onFailure
@@ -231,7 +238,7 @@ function ProfileInfo({ stats, isStatsLoading }: { stats: StravaStats | undefined
           </p>
         </div>
         <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg text-center">
-          <p className="text-md text-gray-500 dark:text-gray-400 mb-1 font-semibold">총 거리 </p>
+          <p className="text-md text-gray-500 dark:text-gray-400 mb-1 font-semibold">총 거리 📏</p>
           <p className="text-md xs:text-sm font-bold text-gray-900 dark:text-white text-center">
             {Math.round((stats?.all_run_totals.distance || 0) / 1000).toLocaleString()}km
           </p>

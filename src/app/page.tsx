@@ -30,16 +30,16 @@ export default function HomePage() {
       <div className="mx-auto px-10">
         <div className="py-12 space-y-12">
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold">🌱 러닝 잔디밭 만들기</h2>
-            <p className="text-secondary">
+            <h2 className="text-2xl xs:text-xl font-bold">🌱 러닝 잔디밭 만들기</h2>
+            <p className="text-md xs:text-sm text-secondary">
               매일의 러닝을 초록색 잔디로 표현해드립니다. <br />
               꾸준한 러닝으로 나만의 잔디밭을 가꿔보세요.
             </p>
           </div>
 
           <div className="space-y-4">
-            <h2 className="text-2xl font-bold">🏆 재미로 보는 러너 등급 정보</h2>
-            <p className="text-secondary">
+            <h2 className="text-2xl xs:text-xl font-bold">🏆 재미로 보는 러너 등급 정보</h2>
+            <p className="text-md xs:text-sm text-secondary">
               누적 달리기 거리에 따라 🏅메달이 부여됩니다. <br />
               런린이부터 런고수까지, 당신의 성장을 확인하세요.
             </p>
