@@ -247,7 +247,7 @@ export default function ActivityGrid({ activities, isLoading, totalDistance }: A
                         className={`aspect-square rounded-sm ${getIntensityColor(distance)}
                           hover:ring-2 hover:ring-offset-2 hover:ring-green-500/50 
                           dark:hover:ring-green-400/50 dark:ring-offset-gray-900
-                          transition-all duration-200 relative
+                          relative
                           cursor-pointer
                           ${isFirstDayOfMonth ? 'flex items-center justify-center' : ''}
                           ${isSelected ? 'ring-2 ring-offset-2 ring-green-500 dark:ring-green-400' : ''}`}

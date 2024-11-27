@@ -3,7 +3,8 @@ const nextConfig = {
   images: {
     domains: [
       'lh3.googleusercontent.com', // Google 프로필 이미지 도메인
-      'graph.facebook.com' // Facebook 프로필 이미지 도메인
+      'graph.facebook.com', // Facebook 프로필 이미지 도메인
+      'dgalywyr863hv.cloudfront.net' // Strava 프로필 이미지 도메인
     ],
     remotePatterns: [
       {
