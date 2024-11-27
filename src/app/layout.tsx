@@ -29,7 +29,7 @@ export const metadata: Metadata = {
         alt: '런데일리 미리보기'
       }
     ],
-    locale: 'en_US',
+    locale: 'ko_KR',
     type: 'website'
   },
   twitter: {
@@ -54,7 +54,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   })
 
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="ko" suppressHydrationWarning>
       <body className={cn('min-h-screen bg-background font-sans antialiased')}>
         <ThemeProvider>
           <QueryClientProvider client={queryClient}>
