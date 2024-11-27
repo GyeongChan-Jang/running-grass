@@ -101,6 +101,7 @@ export function MedalProfile({ distance, profileUrl }: { distance: number; profi
 
     // Facebook 프로필 이미지 처리
     if (url.includes('graph.facebook.com')) {
+      return encodeURIComponent(url)
       return `https://graph.facebook.com/${url.split('%2F')[4]}/picture?height=256&width=256`
     }
 
