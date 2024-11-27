@@ -5,9 +5,14 @@ import { StravaActivity } from '@/types/strava'
 import { useQuery } from '@tanstack/react-query'
 
 const PER_PAGE = 200
+const YEAR_2024_START = 1704067200 // 2024-01-01 00:00:00 UTC
+const YEAR_2024_END = 1735689599 // 2024-12-31 23:59:59 UTC
 
 interface GetActivitiesParams {
   per_page: number
+  page: number
+  after: number
+  before: number
 }
 
 const getActivities = async (accessToken: string | null, params: GetActivitiesParams) => {
@@ -30,12 +35,36 @@ const getActivities = async (accessToken: string | null, params: GetActivitiesPa
   }
 }
 
+const getAllActivities = async (accessToken: string | null): Promise<StravaActivity[]> => {
+  let page = 1
+  let allActivities: StravaActivity[] = []
+  let hasMore = true
+
+  while (hasMore) {
+    const activities = await getActivities(accessToken, {
+      per_page: PER_PAGE,
+      page,
+      after: YEAR_2024_START,
+      before: YEAR_2024_END
+    })
+
+    if (activities.length === 0) {
+      hasMore = false
+    } else {
+      allActivities = [...allActivities, ...activities]
+      page++
+    }
+  }
+
+  return allActivities
+}
+
 export const useGetActivities = (queryOptions?: Partial<UseQueryCustomOptions<StravaActivity[]>>) => {
   const { accessToken } = useUserStore()
 
   return useQuery({
-    queryKey: ['activities'],
-    queryFn: () => getActivities(accessToken, { per_page: PER_PAGE }),
+    queryKey: ['activities', 2024],
+    queryFn: () => getAllActivities(accessToken),
     ...queryOptions
   })
 }

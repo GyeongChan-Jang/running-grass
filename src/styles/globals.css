@@ -16,6 +16,11 @@
   --accent: #ff2e2e;
 }
 
+html {
+  scrollbar-width: none;
+  overflow-x: hidden;
+}
+
 body {
   background-color: var(--background);
 }

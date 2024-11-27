@@ -55,10 +55,10 @@ export default function ShareImage({ activities, totalDays, year, activityMap, t
   const percentage = Math.round((activities / totalDays) * 100)
 
   const getLevelMessage = (percent: number) => {
-    if (percent > 80) return '😮와우 대단해요! 🏃💨 러닝이 곧 내 인생!'
-    if (percent > 60) return '🤩멋져요! 🏃💨 러닝은 식사다 🍚밥먹듯이 러닝!'
-    if (percent > 40) return '🤔오 꽤 뛰셨군요?! 살 좀 빠지셨나요?'
-    if (percent >= 20) return '🤗잘하고 있어요, 🏃💨러닝에 빠져드는 중!'
+    if (percent > 80) return '😮 와우 대단해요! 🏃💨 러닝이 곧 내 인생!'
+    if (percent > 60) return '🤩 멋져요! 🏃💨 러닝은 식사다 🍚밥먹듯이 러닝!'
+    if (percent > 40) return '😉 당신은 🏃💨 러닝의 진심이군요!'
+    if (percent >= 20) return '🤗 잘하고 있어요, 🏃💨 러닝에 빠져드는 중!'
     return '🤥좀 더 노력해봐요, 👟아직은 런린이!'
   }
 
@@ -76,7 +76,7 @@ export default function ShareImage({ activities, totalDays, year, activityMap, t
           <h2 className="text-3xl font-bold text-gray-900 dark:text-white">
             {user?.username || `${user?.firstname} ${user?.lastname}`}님의
           </h2>
-          <p className="text-3xl font-bold text-green-500">러닝 잔디밭!</p>
+          <p className="mt-1 text-3xl font-bold text-green-500 text-left">🏃‍♂️ 러닝 잔디밭 🌱</p>
         </div>
       </div>
 

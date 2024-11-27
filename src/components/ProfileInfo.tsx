@@ -171,7 +171,6 @@ function ProfileInfo({ stats, isStatsLoading }: { stats: StravaStats | undefined
   }
 
   if (isLoading || isStatsLoading) {
-    // if (isLoading) {
     return <ProfileSkeleton />
   }
 
