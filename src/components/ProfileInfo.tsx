@@ -100,10 +100,9 @@ export function MedalProfile({ distance, profileUrl }: { distance: number; profi
     if (!url) return '/images/profile-default.png'
 
     // Facebook 프로필 이미지 처리
-    if (url.includes('graph.facebook.com')) {
-      return decodeURIComponent(url)
-      // return `https://graph.facebook.com/${url.split('%2F')[4]}/picture?height=256&width=256`
-    }
+    // if (url.includes('graph.facebook.com')) {
+    //   return `https://graph.facebook.com/${url.split('%2F')[4]}/picture?height=256&width=256`
+    // }
 
     try {
       new URL(url)
