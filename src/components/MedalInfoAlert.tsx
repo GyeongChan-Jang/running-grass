@@ -67,7 +67,7 @@ export function MedalInfoAlert({ open, onOpenChange }: MedalInfoAlertProps) {
 
         {/* 스크롤 가능한 컨텐츠 영역 */}
         <div className="overflow-y-auto flex-grow my-4 pr-2">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-4">
             {medalInfos.map((info) => (
               <div key={info.label} className="p-4 bg-muted rounded-lg">
                 <div className="flex items-center gap-3 mb-4">
