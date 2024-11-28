@@ -17,7 +17,7 @@ interface MedalInfo {
 const medalInfos: MedalInfo[] = [
   {
     label: '천상계',
-    requirement: '10,000km 이상',
+    requirement: '7,000km 이상',
     description: '지구와 달 사이를 달리는 수준의 러너'
   },
   {
@@ -57,11 +57,16 @@ export function MedalInfoAlert({ open, onOpenChange }: MedalInfoAlertProps) {
     <AlertDialog open={open} onOpenChange={onOpenChange}>
       <AlertDialogContent className="max-w-3xl max-h-[90vh] flex flex-col">
         <AlertDialogHeader className="flex-shrink-0">
-          <div className="flex items-center justify-between">
-            <AlertDialogTitle>🏃‍♂️ 러닝 등급 안내</AlertDialogTitle>
-            <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full" onClick={() => onOpenChange(false)}>
-              <X className="h-4 w-4" />
-            </Button>
+          <div className="flex flex-col space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <AlertDialogTitle>🏃‍♂️ 러닝 등급 안내</AlertDialogTitle>
+                <span className="text-xs text-muted-foreground">(총 러닝 거리 기준)</span>
+              </div>
+              <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full" onClick={() => onOpenChange(false)}>
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
           </div>
         </AlertDialogHeader>
 
