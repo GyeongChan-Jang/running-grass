@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { LogOut } from 'lucide-react'
 import { useUserStore } from '@/store/user'
 import { useGetUserInfo } from '@/hooks/queries/useGetUserInfo'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { logout } from '@/app/auth'
 import { Skeleton } from './ui/skeleton'
 import { ErrorBoundary } from './errors/ErrorBoundary'
@@ -15,6 +15,7 @@ import { ConfirmAlert } from '@/components/ui/ConfirmAlert'
 import { toast } from '@/hooks/use-toast'
 import Image from 'next/image'
 import { StravaStats } from '@/types/strava'
+import { MedalInfoAlert } from './MedalInfoAlert'
 
 function ProfileSkeleton() {
   return (
@@ -68,7 +69,17 @@ export default function ProfileInfoWrapper({
 }
 
 // 메달 컴포넌트 추가
-export function MedalProfile({ distance, profileUrl }: { distance: number; profileUrl: string }) {
+export function MedalProfile({
+  distance,
+  profileUrl,
+  isImage = false
+}: {
+  distance: number
+  profileUrl: string
+  isImage?: boolean
+}) {
+  const [showMedalInfo, setShowMedalInfo] = useState(false)
+
   const getMedalStyle = (distance: number) => {
     // 천상계러너: 7000km 이상
     if (distance > 7000) {
@@ -157,40 +168,86 @@ export function MedalProfile({ distance, profileUrl }: { distance: number; profi
 
   const validProfileUrl = getValidImageUrl(profileUrl)
 
+  if (isImage) {
+    return (
+      <div className="relative inline-flex flex-col items-center">
+        {/* 메달 리본 */}
+        <div
+          className={`absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-10 
+            bg-gradient-to-b ${medalStyle.ribbon} rounded-t-sm z-10`}
+        />
+
+        {/* 메달 테두리와 이미지 */}
+        <div
+          className={`relative w-20 h-20 rounded-full 
+            border-[6px] ${medalStyle.border}
+            ${medalStyle.glow}
+            bg-white dark:bg-gray-800
+            overflow-hidden
+            z-20
+            transition-all duration-300
+            hover:scale-105`}
+        >
+          <Image src={validProfileUrl} alt="Profile" fill sizes="80px" className="rounded-full object-cover" priority />
+        </div>
+
+        {/* 메달 등급 라벨 */}
+        <div
+          className={`absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap
+            bg-white dark:bg-gray-800 px-3 py-1 rounded-full
+            text-xs font-bold
+            ${medalStyle.border.replace('border-', 'text-')}
+            shadow-lg z-30`}
+        >
+          <span className="text-xs text-center">{medalStyle.label}</span>
+          {/* {medalStyle.label} */}
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="relative inline-flex flex-col items-center">
-      {/* 메달 리본 */}
+    <>
       <div
-        className={`absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-10 
-          bg-gradient-to-b ${medalStyle.ribbon} rounded-t-sm z-10`}
-      />
-
-      {/* 메달 테두리와 이미지 */}
-      <div
-        className={`relative w-20 h-20 rounded-full 
-          border-[6px] ${medalStyle.border}
-          ${medalStyle.glow}
-          bg-white dark:bg-gray-800
-          overflow-hidden
-          z-20
-          transition-all duration-300
-          hover:scale-105`}
+        className="relative inline-flex flex-col items-center cursor-pointer"
+        onClick={() => setShowMedalInfo(true)}
+        title="클릭하여 메달 등급 정보 보기"
       >
-        <Image src={validProfileUrl} alt="Profile" fill sizes="80px" className="rounded-full object-cover" priority />
+        {/* 메달 리본 */}
+        <div
+          className={`absolute -top-3 left-1/2 -translate-x-1/2 w-8 h-10 
+            bg-gradient-to-b ${medalStyle.ribbon} rounded-t-sm z-10`}
+        />
+
+        {/* 메달 테두리와 이미지 */}
+        <div
+          className={`relative w-20 h-20 rounded-full 
+            border-[6px] ${medalStyle.border}
+            ${medalStyle.glow}
+            bg-white dark:bg-gray-800
+            overflow-hidden
+            z-20
+            transition-all duration-300
+            hover:scale-105`}
+        >
+          <Image src={validProfileUrl} alt="Profile" fill sizes="80px" className="rounded-full object-cover" priority />
+        </div>
+
+        {/* 메달 등급 라벨 */}
+        <div
+          className={`absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap
+            bg-white dark:bg-gray-800 px-3 py-1 rounded-full
+            text-xs font-bold
+            ${medalStyle.border.replace('border-', 'text-')}
+            shadow-lg z-30`}
+        >
+          <span className="text-xs text-center">{medalStyle.label}</span>
+          {/* {medalStyle.label} */}
+        </div>
       </div>
 
-      {/* 메달 등급 라벨 */}
-      <div
-        className={`absolute -bottom-2 left-1/2 -translate-x-1/2 whitespace-nowrap
-          bg-white dark:bg-gray-800 px-3 py-1 rounded-full
-          text-xs font-bold
-          ${medalStyle.border.replace('border-', 'text-')}
-          shadow-lg z-30`}
-      >
-        <span className="text-xs text-center">{medalStyle.label}</span>
-        {/* {medalStyle.label} */}
-      </div>
-    </div>
+      <MedalInfoAlert open={showMedalInfo} onOpenChange={setShowMedalInfo} />
+    </>
   )
 }
 
