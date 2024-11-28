@@ -68,6 +68,8 @@ export default function ActivityGrid({ activities, isLoading, totalDistance }: A
   const gridRef = useRef<HTMLDivElement>(null)
   const shareImageRef = useRef<HTMLDivElement>(null)
 
+  console.log(activities)
+
   // 활동 데이터로부터 연도 목록 추출
   const years = useMemo(() => {
     if (!activities?.length) return []

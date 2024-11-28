@@ -41,8 +41,8 @@ function ProfileSkeleton() {
       {/* 구분선 스켈레톤 */}
       <Skeleton className="h-[1px] w-full my-6" />
       {/* 통계 정보 스켈레톤 */}
-      <div className="grid grid-cols-3 gap-4">
-        {[1, 2, 3].map((i) => (
+      <div className="grid grid-cols-4 gap-4">
+        {[1, 2, 3, 4].map((i) => (
           <div key={i} className="p-4 rounded-lg">
             <Skeleton className="h-4 w-16 mx-auto mb-2" />
             <Skeleton className="h-5 w-20 mx-auto" />
@@ -70,6 +70,25 @@ export default function ProfileInfoWrapper({
 // 메달 컴포넌트 추가
 export function MedalProfile({ distance, profileUrl }: { distance: number; profileUrl: string }) {
   const getMedalStyle = (distance: number) => {
+    // 천상계러너: 7000km 이상
+    if (distance > 7000) {
+      return {
+        border: 'border-teal-300 dark:border-teal-300',
+        glow: 'shadow-[0_0_20px_rgba(94,234,212,0.9)] dark:shadow-[0_0_20px_rgba(45,212,191,0.9)]',
+        ribbon: 'from-teal-400 to-teal-500',
+        label: '천상계'
+      }
+    }
+    // 런마스터: 5000km 이상
+    if (distance > 5000) {
+      return {
+        border: 'border-lime-400 dark:border-lime-400',
+        glow: 'shadow-[0_0_20px_rgba(163,230,53,0.9)] dark:shadow-[0_0_20px_rgba(132,204,22,0.9)]',
+        ribbon: 'from-lime-500 to-lime-600',
+        label: '런마스터'
+      }
+    }
+    // 런고수: 3000 ~ 5000km
     if (distance >= 3000) {
       return {
         border: 'border-yellow-200 dark:border-yellow-200',
@@ -78,6 +97,7 @@ export function MedalProfile({ distance, profileUrl }: { distance: number; profi
         label: '런고수'
       }
     }
+    // 런중수: 1000 ~ 3000km
     if (distance >= 1000) {
       return {
         border: 'border-gray-300 dark:border-gray-500',
@@ -86,11 +106,32 @@ export function MedalProfile({ distance, profileUrl }: { distance: number; profi
         label: '런중수'
       }
     }
+    // 런초보: 500 ~ 1000km
+    if (distance >= 500 && distance < 1000) {
+      return {
+        border: 'border-stone-400 dark:border-stone-400',
+        glow: 'shadow-[0_0_20px_rgba(168,162,158,0.9)] dark:shadow-[0_0_20px_rgba(120,113,108,0.9)]',
+        ribbon: 'from-stone-500 to-stone-600',
+        label: '런초보'
+      }
+    }
+
+    // 런린이: 0 ~ 500km
+    if (distance > 0 && distance < 500) {
+      return {
+        border: 'border-orange-400 dark:border-orange-400',
+        glow: 'shadow-[0_0_20px_rgba(251,146,60,0.9)] dark:shadow-[0_0_20px_rgba(249,115,22,0.9)]',
+        ribbon: 'from-orange-600 to-orange-600',
+        label: '런린이'
+      }
+    }
+
+    // 예외처리
     return {
-      border: 'border-orange-400 dark:border-orange-400',
-      glow: 'shadow-[0_0_20px_rgba(251,146,60,0.9)] dark:shadow-[0_0_20px_rgba(249,115,22,0.9)]',
-      ribbon: 'from-orange-600 to-orange-600',
-      label: '런린이'
+      border: 'border-purple-300 dark:border-purple-400',
+      glow: 'shadow-[0_0_20px_rgba(216,180,254,0.8)] dark:shadow-[0_0_20px_rgba(192,132,252,0.9)]',
+      ribbon: 'from-purple-400 to-purple-500',
+      label: '🥲에러ㅠ'
     }
   }
 
@@ -146,7 +187,8 @@ export function MedalProfile({ distance, profileUrl }: { distance: number; profi
           ${medalStyle.border.replace('border-', 'text-')}
           shadow-lg z-30`}
       >
-        {medalStyle.label}
+        <span className="text-xs text-center">{medalStyle.label}</span>
+        {/* {medalStyle.label} */}
       </div>
     </div>
   )
