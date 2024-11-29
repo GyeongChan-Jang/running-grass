@@ -1,6 +1,5 @@
 'use client'
 
-import { StravaActivity } from '@/types/strava'
 import { format, parseISO, eachDayOfInterval, startOfYear, endOfYear } from 'date-fns'
 import { useMemo, useState, useRef } from 'react'
 import { ScrollArea, ScrollBar } from '@/components/ui/scroll-area'
@@ -10,10 +9,10 @@ import Image from 'next/image'
 import html2canvas from 'html2canvas'
 import ShareImage from './ShareImage'
 import { ShareIcon } from 'lucide-react'
+import { useGetActivities } from '@/hooks/queries/useGetActivities'
+import { useQueryError } from '@/hooks/useQueryError'
 
 interface ActivityGridProps {
-  activities: StravaActivity[]
-  isLoading: boolean
   totalDistance: number | undefined
 }
 
@@ -64,9 +63,19 @@ function CellContent({ distance, isFirstDayOfMonth, date, showDistance }: CellCo
   )
 }
 
-export default function ActivityGrid({ activities, isLoading, totalDistance }: ActivityGridProps) {
+export default function ActivityGrid({ totalDistance }: ActivityGridProps) {
   const gridRef = useRef<HTMLDivElement>(null)
   const shareImageRef = useRef<HTMLDivElement>(null)
+
+  const { onFailure } = useQueryError()
+
+  const {
+    data: activities,
+    isLoading
+    // isError
+  } = useGetActivities({
+    ...onFailure
+  })
 
   // 활동 데이터로부터 연도 목록 추출
   const years = useMemo(() => {
@@ -87,7 +96,7 @@ export default function ActivityGrid({ activities, isLoading, totalDistance }: A
     const map = new Map<string, number>()
 
     activities
-      .filter((activity) => activity.type === 'Run')
+      ?.filter((activity) => activity.type === 'Run')
       .forEach((activity) => {
         const date = format(parseISO(activity.start_date), 'yyyy-MM-dd')
         if (!date.startsWith(selectedYear)) return
@@ -165,7 +174,7 @@ export default function ActivityGrid({ activities, isLoading, totalDistance }: A
     const now = new Date()
     const startOfYear = new Date(now.getFullYear(), 0, 1)
     const totalDays = Math.floor((now.getTime() - startOfYear.getTime()) / (1000 * 60 * 60 * 24))
-    const runningDays = activities.filter(
+    const runningDays = activities?.filter(
       (a) => a.type === 'Run' && format(parseISO(a.start_date), 'yyyy') === now.getFullYear().toString()
     ).length
 
@@ -290,8 +299,8 @@ export default function ActivityGrid({ activities, isLoading, totalDistance }: A
       {/* 공유용 이미지 (숨김) */}
       <div className="fixed left-[-9999px]" ref={shareImageRef}>
         <ShareImage
-          activities={stats.runningDays}
-          totalDays={stats.totalDays}
+          activities={stats.runningDays || 0}
+          totalDays={stats.totalDays || 0}
           year={selectedYear}
           activityMap={activityMap}
           totalDistance={Math.round((totalDistance || 0) / 1000)}

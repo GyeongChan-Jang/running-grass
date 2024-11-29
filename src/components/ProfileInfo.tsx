@@ -8,8 +8,6 @@ import { useGetUserInfo } from '@/hooks/queries/useGetUserInfo'
 import { useEffect, useState } from 'react'
 import { logout } from '@/app/auth'
 import { Skeleton } from './ui/skeleton'
-import { ErrorBoundary } from './errors/ErrorBoundary'
-import { ProfileError } from './errors/ProfileError'
 import { useQueryError } from '@/hooks/useQueryError'
 import { ConfirmAlert } from '@/components/ui/ConfirmAlert'
 import { toast } from '@/hooks/use-toast'
@@ -54,19 +52,19 @@ function ProfileSkeleton() {
   )
 }
 
-export default function ProfileInfoWrapper({
-  stats,
-  isStatsLoading
-}: {
-  stats: StravaStats | undefined
-  isStatsLoading: boolean
-}) {
-  return (
-    <ErrorBoundary fallback={<ProfileError />}>
-      <ProfileInfo stats={stats} isStatsLoading={isStatsLoading} />
-    </ErrorBoundary>
-  )
-}
+// export default function ProfileInfoWrapper({
+//   stats,
+//   isStatsLoading
+// }: {
+//   stats: StravaStats | undefined
+//   isStatsLoading: boolean
+// }) {
+//   return (
+//     <ProfileErrorBoundary>
+//       <ProfileInfo stats={stats} isStatsLoading={isStatsLoading} />
+//     </ProfileErrorBoundary>
+//   )
+// }
 
 // 메달 컴포넌트 추가
 export function MedalProfile({
@@ -251,7 +249,13 @@ export function MedalProfile({
   )
 }
 
-function ProfileInfo({ stats, isStatsLoading }: { stats: StravaStats | undefined; isStatsLoading: boolean }) {
+export default function ProfileInfo({
+  stats,
+  isStatsLoading
+}: {
+  stats: StravaStats | undefined
+  isStatsLoading: boolean
+}) {
   const router = useRouter()
   const { setUser } = useUserStore()
   const { onFailure } = useQueryError()
