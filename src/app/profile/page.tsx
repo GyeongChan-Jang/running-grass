@@ -6,6 +6,7 @@ import { useGetActivities } from '@/hooks/queries/useGetActivities'
 import { useQueryError } from '@/hooks/useQueryError'
 import { useGetStats } from '@/hooks/queries/useGetStats'
 import { useUserStore } from '@/store/user'
+import { ProfileErrorBoundary } from '@/components/errors/ProfileErrorBoundary'
 
 export default function ProfileContent() {
   const { onFailure } = useQueryError()
@@ -31,13 +32,15 @@ export default function ProfileContent() {
   }
 
   return (
-    <div className="container mx-auto max-w-[600px] px-4 py-8 space-y-8">
-      <ProfileInfo stats={stats} isStatsLoading={isStatsLoading} />
-      <ActivityGrid
-        totalDistance={stats?.all_run_totals.distance}
-        activities={activities || []}
-        isLoading={isLoading}
-      />
-    </div>
+    <ProfileErrorBoundary>
+      <div className="container mx-auto max-w-[600px] px-4 py-8 space-y-8">
+        <ProfileInfo stats={stats} isStatsLoading={isStatsLoading} />
+        <ActivityGrid
+          totalDistance={stats?.all_run_totals.distance}
+          activities={activities || []}
+          isLoading={isLoading}
+        />
+      </div>
+    </ProfileErrorBoundary>
   )
 }
