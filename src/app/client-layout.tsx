@@ -12,7 +12,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
-        retry: 1,
+        retry: false,
         staleTime: 5 * 60 * 1000,
         refetchOnWindowFocus: false,
         throwOnError: true

@@ -5,9 +5,9 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { AlertCircle, RefreshCcw } from 'lucide-react'
 import { logout } from '@/app/auth'
 
-function ProfileErrorFallback({ resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) {
+function ProfileErrorFallback({ resetErrorBoundary, error }: { error: Error; resetErrorBoundary: () => void }) {
   // 에러 메시지에서 줄바꿈 처리
-  // const errorMessages = error.message.split('\n')
+  const errorMessages = error.message.split('\n')
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
@@ -16,13 +16,11 @@ function ProfileErrorFallback({ resetErrorBoundary }: { error: Error; resetError
           <AlertCircle className="w-12 h-12 text-red-500" />
           <h2 className="text-xl font-semibold text-foreground">데이터를 불러올 수 없습니다</h2>
           <div className="text-muted-foreground text-center space-y-1">
-            {/* {errorMessages.map((message, index) => (
+            {errorMessages.map((message, index) => (
               <p className="whitespace-nowrap" key={index}>
                 {message}
               </p>
-            ))} */}
-            <p className="whitespace-nowrap">하루 요청 횟수를 초과하였습니다.</p>
-            <p className="whitespace-nowrap">내일 다시 시도해주세요!</p>
+            ))}
           </div>
           <div className="flex gap-4 justify-center">
             <Button

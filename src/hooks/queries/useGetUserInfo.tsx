@@ -14,12 +14,15 @@ const getUserInfo = async (accessToken: string | null) => {
     })
 
     if (response.status !== 200) {
-      throw new Error('Failed to get user info')
+      throw new Error('유저 정보를 불러올 수 없습니다!')
     }
 
     return response.data
   } catch (error) {
-    console.error('Failed to get user info:', error)
+    if (error instanceof AxiosError && error.response?.status === 429) {
+      throw new Error('하루 요청 횟수를 초과하였습니다.\n내일 다시 시도해주세요!')
+    }
+    console.error('유저 정보:', error)
     throw error
   }
 }
