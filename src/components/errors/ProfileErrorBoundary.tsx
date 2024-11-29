@@ -5,7 +5,7 @@ import { ErrorBoundary } from 'react-error-boundary'
 import { AlertCircle, RefreshCcw } from 'lucide-react'
 import { logout } from '@/app/auth'
 
-function ProfileErrorFallback({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) {
+function ProfileErrorFallback({ resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) {
   // 에러 메시지에서 줄바꿈 처리
   // const errorMessages = error.message.split('\n')
 
