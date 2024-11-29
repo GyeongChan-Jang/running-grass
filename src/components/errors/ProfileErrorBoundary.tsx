@@ -21,8 +21,8 @@ function ProfileErrorFallback({ resetErrorBoundary }: { error: Error; resetError
                 {message}
               </p>
             ))} */}
-            <p className="whitespace-nowrap">너무 많은 접속자로 인해 요청이 지연되고 있습니다.</p>
-            <p className="whitespace-nowrap">15분 후에 다시 시도해주세요!</p>
+            <p className="whitespace-nowrap">하루 요청 횟수를 초과하였습니다.</p>
+            <p className="whitespace-nowrap">내일 다시 시도해주세요!</p>
           </div>
           <div className="flex gap-4 justify-center">
             <Button
