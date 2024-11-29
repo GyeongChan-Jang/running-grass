@@ -1,4 +1,4 @@
-# Run Daily 🏃‍♂️
+# Running Grass 🌱🏃‍♂️
 
 A web service that visualizes your running records like GitHub's contribution graph.
 
