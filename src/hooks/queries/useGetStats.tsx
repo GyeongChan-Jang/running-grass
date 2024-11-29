@@ -5,16 +5,29 @@ import { StravaStats } from '@/types/strava'
 import { useQuery } from '@tanstack/react-query'
 import { AxiosError } from 'axios'
 
+const STORAGE_KEY = 'strava_stats'
+
 const getStats = async (accessToken: string | null, id: number | undefined) => {
   if (!id) {
-    throw new Error('사용자ID가 유효하지 않습니다.\n다시 로그인해주세요!')
+    throw new Error('사용자ID가 유효하지 않습니다!')
   }
 
   if (!accessToken) {
-    throw new Error('로그인 상태가 아닙니다.\n다시 로그인해주세요!')
+    throw new Error('Access Token이 유효하지 않습니다!')
   }
 
   try {
+    // 로컬 스토리지에서 캐시된 데이터 확인
+    const storedData = localStorage.getItem(STORAGE_KEY)
+    if (storedData) {
+      const { data, timestamp } = JSON.parse(storedData)
+      const now = new Date().getTime()
+      // 24시간(86400000ms) 이내의 데이터인 경우 캐시된 데이터 반환
+      if (now - timestamp < 86400000) {
+        return data
+      }
+    }
+
     const response = await stravaApi.get<StravaStats>(`/athletes/${id}/stats`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
@@ -22,8 +35,17 @@ const getStats = async (accessToken: string | null, id: number | undefined) => {
     })
 
     if (response.status !== 200) {
-      throw new Error('통계 데이터를 불러올 수 없습니다.\n다시 시도해주세요!')
+      throw new Error('Failed to get stats')
     }
+
+    // 새로운 데이터를 로컬 스토리지에 저장
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        data: response.data,
+        timestamp: new Date().getTime()
+      })
+    )
 
     return response.data
   } catch (error) {
