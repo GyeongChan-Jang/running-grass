@@ -8,7 +8,6 @@ import { logout } from '@/app/auth'
 function ProfileErrorFallback({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) {
   // 에러 메시지에서 줄바꿈 처리
   const errorMessages = error.message.split('\n')
-  console.log(error)
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
