@@ -8,6 +8,7 @@ import { logout } from '@/app/auth'
 function ProfileErrorFallback({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) {
   // 에러 메시지에서 줄바꿈 처리
   const errorMessages = error.message.split('\n')
+  console.log(error)
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
@@ -16,11 +17,13 @@ function ProfileErrorFallback({ error, resetErrorBoundary }: { error: Error; res
           <AlertCircle className="w-12 h-12 text-red-500" />
           <h2 className="text-xl font-semibold text-foreground">데이터를 불러올 수 없습니다</h2>
           <div className="text-muted-foreground text-center space-y-1">
-            {errorMessages.map((message, index) => (
+            {/* {errorMessages.map((message, index) => (
               <p className="whitespace-nowrap" key={index}>
                 {message}
               </p>
-            ))}
+            ))} */}
+            <p className="whitespace-nowrap">너무 많은 접속자로 인해 요청이 지연되고 있습니다.</p>
+            <p className="whitespace-nowrap">15분 후에 다시 시도해주세요!</p>
           </div>
           <div className="flex gap-4 justify-center">
             <Button

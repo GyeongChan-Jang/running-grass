@@ -35,6 +35,7 @@ const getActivities = async (accessToken: string | null, params: GetActivitiesPa
 
     return response.data
   } catch (error) {
+    console.log(error)
     // 429 에러 발생 시
     if (error instanceof AxiosError && error.response?.status === 429) {
       throw new Error('너무 많은 접속자로 인해 요청이 지연되고 있습니다.\n15분 후에 다시 시도해주세요!')
