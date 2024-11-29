@@ -2,7 +2,7 @@
 
 import { useUserStore } from '@/store/user'
 import React, { useEffect, useState } from 'react'
-import { getToken } from '../auth/getToken'
+import { getToken } from '@/app/auth/getToken'
 import { Loader2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 

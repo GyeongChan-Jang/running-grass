@@ -1,0 +1,59 @@
+{
+  "profile": {
+    "stats": {
+      "totalRuns": "Total Runs",
+      "totalDistance": "Total Distance",
+      "totalTime": "Total Time",
+      "totalElevation": "Total Elevation"
+    },
+    "errors": {
+      "loadFailed": "Failed to load data",
+      "retryTomorrow": "Daily request limit exceeded.\nPlease try again tomorrow!",
+      "loginRequired": "Please login again!"
+    },
+    "buttons": {
+      "retry": "Retry",
+      "login": "Login Again",
+      "logout": "Logout"
+    }
+  },
+  "home": {
+    "hero": {
+      "title": {
+        "line1": "Make Your Running",
+        "line2": "More Special"
+      },
+      "subtitle": {
+        "line1": "Record your daily runs as grass,",
+        "line2": "and see your growth at a glance"
+      }
+    },
+    "features": {
+      "grass": {
+        "title": "🌱 Create Your Running Grass",
+        "description": {
+          "line1": "We visualize your daily runs as green grass.",
+          "line2": "Grow your own grass field with consistent running."
+        }
+      },
+      "medal": {
+        "title": "🏆 Fun Runner Level Information",
+        "description": {
+          "line1": "Earn 🏅medals based on your cumulative running distance.",
+          "line2": "Track your progress from beginner to expert runner."
+        }
+      }
+    },
+    "cta": {
+      "startWithStrava": "Start with Strava"
+    }
+  },
+  "login": {
+    "title": "Start Your Running Journey",
+    "subtitle": {
+      "line1": "Sign in with your Strava account",
+      "line2": "and grow your own running 🌱 grass field"
+    },
+    "button": "Continue with Strava"
+  }
+}

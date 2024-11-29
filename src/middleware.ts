@@ -1,22 +1,11 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import createMiddleware from 'next-intl/middleware'
 
-export function middleware(request: NextRequest) {
-  const stravaToken = request.cookies.get('strava_access_token')
-
-  // 보호된 라우트에 대한 접근 검사
-  if (request.nextUrl.pathname.startsWith('/profile') && !stravaToken) {
-    return NextResponse.redirect(new URL('/login', request.url))
-  }
-
-  // 이미 로그인한 사용자가 로그인 페이지에 접근하는 경우
-  if (request.nextUrl.pathname === '/login' && stravaToken) {
-    return NextResponse.redirect(new URL('/profile', request.url))
-  }
-
-  return NextResponse.next()
-}
+export default createMiddleware({
+  // Define locales and defaultLocale in the middleware
+  locales: ['en', 'ko'],
+  defaultLocale: 'en'
+})
 
 export const config = {
-  matcher: ['/profile/:path*', '/login']
+  matcher: ['/((?!api|_next|.*\\..*).*)'] // Ensure middleware applies correctly
 }

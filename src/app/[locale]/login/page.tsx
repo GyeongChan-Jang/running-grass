@@ -3,8 +3,11 @@
 import { Button } from '@/components/ui/button'
 import { login } from '@/app/auth'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 export default function LoginPage() {
+  const t = useTranslations('login')
+
   const handleStravaLogin = () => {
     login()
   }
@@ -13,13 +16,7 @@ export default function LoginPage() {
     <div className="min-h-screen relative flex items-center justify-center overflow-hidden">
       {/* 배경 이미지 및 오버레이 */}
       <div className="absolute inset-0">
-        <Image
-          src="/images/running-background.avif" // 러닝 관련 배경 이미지 필요
-          alt="Running Background"
-          fill
-          className="object-cover"
-          priority
-        />
+        <Image src="/images/running-background.avif" alt="Running Background" fill className="object-cover" priority />
         <div className="absolute inset-0 bg-black/50" />
       </div>
 
@@ -27,13 +24,11 @@ export default function LoginPage() {
       <div className="relative z-10 w-full max-w-md p-8">
         <div className="bg-white/10 backdrop-blur-lg rounded-3xl p-8 shadow-2xl border border-white/20">
           <div className="text-center space-y-4 mb-8">
-            <h2 className="sm:text-2xl md:text-3xl text-xl font-bold text-white whitespace-nowrap">
-              러닝 기록을 시작하세요
-            </h2>
+            <h2 className="sm:text-2xl md:text-3xl text-xl font-bold text-white whitespace-pre-line">{t('title')}</h2>
             <p className="text-gray-100 font-semibold text-md">
-              Strava 계정으로 로그인하고
+              {t('subtitle.line1')}
               <br />
-              나만의 러닝 🌱 잔디밭을 가꿔보세요
+              {t('subtitle.line2')}
             </p>
           </div>
 
@@ -49,12 +44,12 @@ export default function LoginPage() {
             <div className="flex items-center justify-center gap-3">
               <Image
                 className="bg-white rounded-full"
-                src="/images/strava.png" // Strava 로고 이미지 필요
+                src="/images/strava.png"
                 alt="Strava Logo"
                 width={40}
                 height={40}
               />
-              <span className="whitespace-nowrap font-bold text-lg">Strava로 계속하기</span>
+              <span className="whitespace-nowrap font-bold">{t('button')}</span>
             </div>
           </Button>
         </div>

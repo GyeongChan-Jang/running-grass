@@ -1,14 +1,12 @@
-import ProfileInfo from "../ProfileInfo";
-
 import React from 'react'
 import { useQueryError } from '@/hooks/useQueryError'
 import { useGetStats } from '@/hooks/queries/useGetStats'
 import { useUserStore } from '@/store/user'
 
 import ActivityGrid from '@/components/ActivityGrid'
+import ProfileInfo from '@/components/ProfileInfo'
 
 const ProfilePage = () => {
-
   const { onFailure } = useQueryError()
   const { user } = useUserStore()
 
@@ -18,11 +16,9 @@ const ProfilePage = () => {
 
   return (
     <div className="container mx-auto max-w-[600px] px-4 py-8 space-y-8">
-        <ProfileInfo stats={stats} isStatsLoading={isStatsLoading} />
-        <ActivityGrid
-          totalDistance={stats?.all_run_totals.distance}
-        />
-      </div>
+      <ProfileInfo stats={stats} isStatsLoading={isStatsLoading} />
+      <ActivityGrid totalDistance={stats?.all_run_totals.distance} />
+    </div>
   )
 }
 
