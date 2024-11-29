@@ -39,11 +39,12 @@ const getActivities = async (accessToken: string | null, params: GetActivitiesPa
 const getAllActivities = async (accessToken: string | null): Promise<StravaActivity[]> => {
   // 로컬 스토리지에서 기존 데이터 확인
   const storedData = localStorage.getItem(STORAGE_KEY)
-  let cachedActivities: StravaActivity[] = storedData ? JSON.parse(storedData) : []
+  const cachedActivities: StravaActivity[] = storedData ? JSON.parse(storedData) : []
 
   // 마지막 활동 시간 확인
-  const lastActivityTime =
-    cachedActivities.length > 0 ? new Date(cachedActivities[0].start_date).getTime() / 1000 : YEAR_2024_START
+  const lastActivityTime = cachedActivities.length > 0 
+    ? new Date(cachedActivities[0].start_date).getTime() / 1000 
+    : YEAR_2024_START
 
   console.log('lastActivityTime', lastActivityTime)
 

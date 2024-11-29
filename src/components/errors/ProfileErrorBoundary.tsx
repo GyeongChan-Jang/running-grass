@@ -1,12 +1,16 @@
 'use client'
 
-import { Button } from '@/components/ui/button'
 import { ErrorBoundary } from 'react-error-boundary'
-import { useRouter } from 'next/navigation'
-import { AlertCircle, RefreshCcw } from 'lucide-react'
+import { AlertCircle } from 'lucide-react'
 
-function ProfileErrorFallback({ error, resetErrorBoundary }: { error: Error; resetErrorBoundary: () => void }) {
-  const router = useRouter()
+function ProfileErrorFallback({
+  error
+}: // resetErrorBoundary
+{
+  error: Error
+  resetErrorBoundary: () => void
+}) {
+  // const router = useRouter()
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
