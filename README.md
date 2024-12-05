@@ -16,6 +16,12 @@ A web service that visualizes your running records like GitHub's contribution gr
 | -------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
 | <img src="https://github.com/user-attachments/assets/2b89e48f-60f7-4d3d-9e4c-ddaaa370af49" width="400" alt="Login Page" /> | <img src="https://github.com/user-attachments/assets/c4076baa-10ce-47b6-987c-07ef73f4c8c4" width="400" alt="Profile Page" /> |
 
+### Running Medal System
+
+| Light Mode                                                                                                                          | Dark Mode                                                                                                                          |
+| ----------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
+| <img src="https://github.com/user-attachments/assets/53b3c8ba-177d-4c9f-87dc-d7fde189c492" width="400" alt="Running Grass Light" /> | <img src="https://github.com/user-attachments/assets/ef0fcd0b-9184-418d-88c4-d0959e8ce328" width="400" alt="Running Grass Dark" /> |
+
 ### Running Grass Image Sharing
 
 | Light Mode                                                                                                                          | Dark Mode                                                                                                                          |
