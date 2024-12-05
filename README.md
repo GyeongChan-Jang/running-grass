@@ -8,7 +8,7 @@ A web service that visualizes your running records like GitHub's contribution gr
 
 | Landing Page                                                                                                              | Main Video                                                                                                                 |
 | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| <img src="https://github.com/user-attachments/assets/4a2aa8f7-e5a7-4ac8-9039-005e9d98d899" width="400" alt="Main Page" /> | <img src="https://github.com/user-attachments/assets/d90b274f-facf-4e3a-8cce-22debd482d4c" width="400" alt="Main Video" /> |
+| <img src="https://github.com/user-attachments/assets/4a2aa8f7-e5a7-4ac8-9039-005e9d98d899" width="400" alt="Main Page" /> | <img src="https://github.com/user-attachments/assets/6623cbc5-309d-4012-bf66-e77bc95f1538" width="400" alt="Main Video" /> |
 
 ### User Pages
 
