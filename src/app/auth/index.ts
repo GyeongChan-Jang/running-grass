@@ -1,7 +1,5 @@
 import { useUserStore } from '@/store/user'
 import { toast } from '@/hooks/use-toast'
-import { stravaApi } from '@/lib/strava'
-import Cookies from 'js-cookie'
 
 export async function logout() {
   try {
