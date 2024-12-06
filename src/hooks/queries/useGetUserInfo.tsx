@@ -42,7 +42,7 @@ const getUserInfo = async (accessToken: string | null) => {
     return response.data
   } catch (error) {
     if (error instanceof AxiosError && error.response?.status === 429) {
-      throw new Error('하루 요청 횟수를 초과하였습니다.\n내일 다시 시도해주세요!')
+      throw new Error('하루 요청 횟수를 초과하였습니다🥲\n내일 다시 시도해주세요!')
     }
     console.error('Failed to get user info:', error)
     throw error
@@ -53,7 +53,7 @@ export const useGetUserInfo = (queryOptions?: UseQueryCustomOptions<StravaUserIn
   const { accessToken } = useUserStore()
 
   if (!accessToken) {
-    throw new Error('Access Token이 유효하지 않습니다!')
+    throw new Error('로그인 정보가 만료되었습니다🥲\n다시 로그인 해주세요!')
   }
 
   return useQuery({

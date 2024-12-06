@@ -1,29 +1,24 @@
 import { useUserStore } from '@/store/user'
 import { toast } from '@/hooks/use-toast'
+import { stravaApi } from '@/lib/strava'
+import Cookies from 'js-cookie'
 
 export async function logout() {
   try {
-    const response = await fetch('/api/user', {
+    // 서버에 로그아웃 요청 (서버에서 리다이렉트 처리)
+    await fetch('/api/auth/logout', {
       method: 'POST',
-      headers: {
-        'x-action': 'logout'
-      }
+      credentials: 'include'
     })
 
-    if (!response.ok) {
-      throw new Error('Logout failed')
-    }
+    // 로컬 스토리지 데이터 삭제
+    const STORAGE_KEYS = ['strava_activities_2024', 'strava_user_info', 'strava_stats']
+    STORAGE_KEYS.forEach((key) => localStorage.removeItem(key))
 
     // Zustand store 초기화
-    useUserStore.getState().reset()
-
-    toast({
-      title: '로그아웃 성공',
-      description: '성공적으로 로그아웃 되었습니다.'
-    })
-
-    // 홈페이지로 리다이렉트
-    window.location.href = '/'
+    setTimeout(() => {
+      useUserStore.getState().reset()
+    }, 1000)
   } catch (error) {
     console.error('Logout error:', error)
     toast({
@@ -31,7 +26,43 @@ export async function logout() {
       description: '로그아웃 중 오류가 발생했습니다.',
       variant: 'destructive'
     })
-    throw error
+  }
+}
+
+export async function revokeAccess() {
+  try {
+    // 서버에 revoke 요청
+    const response = await fetch('/api/auth/logout', {
+      method: 'POST',
+      headers: {
+        'X-Revoke-Access': 'true' // revoke 요청임을 나타내는 헤더
+      },
+      credentials: 'include'
+    })
+
+    if (!response.ok) {
+      throw new Error('서비스 연동 해제 중 오류가 발생했습니다.')
+    }
+
+    // 로컬 데이터 완전 삭제
+    localStorage.clear()
+
+    // Zustand store 초기화
+    useUserStore.getState().reset()
+
+    toast({
+      title: '서비스 연동 해제 완료',
+      description: 'Strava 연동이 해제되었습니다.'
+    })
+
+    window.location.href = '/logout'
+  } catch (error) {
+    console.error('Revoke error:', error)
+    toast({
+      title: '연동 해제 실패',
+      description: 'Strava 연동 해제 중 오류가 발생했습니다.',
+      variant: 'destructive'
+    })
   }
 }
 

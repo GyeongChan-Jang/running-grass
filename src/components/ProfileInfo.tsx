@@ -149,11 +149,6 @@ export function MedalProfile({
   const getValidImageUrl = (url: string) => {
     if (!url) return '/images/profile-default.png'
 
-    // Facebook 프로필 이미지 처리
-    // if (url.includes('graph.facebook.com')) {
-    //   return `https://graph.facebook.com/${url.split('%2F')[4]}/picture?height=256&width=256`
-    // }
-
     try {
       new URL(url)
       return url
@@ -271,10 +266,6 @@ export default function ProfileInfo({
   const handleLogout = async () => {
     try {
       await logout()
-      toast({
-        title: '로그아웃 성공',
-        description: '성공적으로 로그아웃 되었습니다.'
-      })
       router.replace('/')
     } catch (error) {
       console.error('Failed to logout:', error)
