@@ -11,6 +11,7 @@ import ShareImage from './ShareImage'
 import { ShareIcon } from 'lucide-react'
 import { useGetActivities } from '@/hooks/queries/useGetActivities'
 import { useQueryError } from '@/hooks/useQueryError'
+import { useResponsive } from '@/hooks/useResponsive'
 
 interface ActivityGridProps {
   totalDistance: number | undefined
@@ -66,6 +67,7 @@ function CellContent({ distance, isFirstDayOfMonth, date, showDistance }: CellCo
 export default function ActivityGrid({ totalDistance }: ActivityGridProps) {
   const gridRef = useRef<HTMLDivElement>(null)
   const shareImageRef = useRef<HTMLDivElement>(null)
+  const screenSize = useResponsive()
 
   const { onFailure } = useQueryError()
 
@@ -76,7 +78,6 @@ export default function ActivityGrid({ totalDistance }: ActivityGridProps) {
   } = useGetActivities({
     ...onFailure
   })
-
   // 활동 데이터로부터 연도 목록 추출
   const years = useMemo(() => {
     if (!activities?.length) return []
@@ -85,7 +86,7 @@ export default function ActivityGrid({ totalDistance }: ActivityGridProps) {
         .filter((activity) => activity.type === 'Run')
         .map((activity) => format(parseISO(activity.start_date), 'yyyy'))
     )
-    return Array.from(yearSet).sort().reverse()
+    return Array.from(yearSet).sort()
   }, [activities])
 
   const [selectedYear, setSelectedYear] = useState(years[0] || new Date().getFullYear().toString())
@@ -197,12 +198,12 @@ export default function ActivityGrid({ totalDistance }: ActivityGridProps) {
             <span className="text-green-600 font-bold mt-1">러닝 잔디밭</span>
           </h2>
           <ScrollArea className="max-w-[60%]">
-            <div className="flex space-x-2 p-1">
+            <div className="flex space-x-[2px] p-1">
               {years.map((year) => (
                 <Button
                   key={year}
                   variant={selectedYear === year ? 'outline' : 'ghost'}
-                  size="sm"
+                  size={screenSize === 'mobile' ? 'xs' : 'sm'}
                   onClick={() => setSelectedYear(year)}
                   className="flex-shrink-0 text-sm md:text-base"
                 >
