@@ -14,57 +14,55 @@ import { toast } from '@/hooks/use-toast'
 import Image from 'next/image'
 import { StravaStats } from '@/types/strava'
 import { MedalInfoAlert } from './MedalInfoAlert'
+import { useResponsive } from '@/hooks/useResponsive'
 
 function ProfileSkeleton() {
+  const screenSize = useResponsive()
   return (
-    <div className="p-6 rounded-lg shadow-md">
+    <div className={`p-6 rounded-lg shadow-md`}>
       <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 mt-4">
           {/* 프로필 이미지 스켈레톤 */}
-          <Skeleton className="w-14 h-14 rounded-full" />
+          <Skeleton className="w-20 h-20 rounded-full" />
           <div className="space-y-2">
             {/* 이름 스켈레톤 */}
-            <Skeleton className="h-5 w-[180px]" />
+            <Skeleton className="h-5 w-[160px]" />
             {/* 유저네임 스켈레톤 */}
             <Skeleton className="h-4 w-[120px]" />
             {/* 도시/나라 스켈레톤 */}
             <div className="flex gap-2">
+              <Skeleton className="h-4 w-[60px]" />
               <Skeleton className="h-4 w-[80px]" />
-              <Skeleton className="h-4 w-[100px]" />
             </div>
           </div>
         </div>
         {/* 로그아웃 버튼 스켈레톤 */}
-        <Skeleton className="h-10 w-10 rounded-md" />
+        <Skeleton className="h-8 w-8 rounded-md" />
       </div>
       {/* 구분선 스켈레톤 */}
       <Skeleton className="h-[1px] w-full my-6" />
       {/* 통계 정보 스켈레톤 */}
-      <div className="grid grid-cols-4 gap-4">
-        {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="p-4 rounded-lg">
-            <Skeleton className="h-4 w-16 mx-auto mb-2" />
-            <Skeleton className="h-5 w-20 mx-auto" />
-          </div>
-        ))}
-      </div>
+      {/* 모바일 일때는 2컬럼 2로우 */}
+      {screenSize === 'mobile' ? (
+        <div className="grid grid-cols-2 gap-4">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="rounded-lg">
+              <Skeleton className="h-[80px] w-full mx-auto" />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="grid grid-cols-4 gap-4">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="rounded-lg">
+              <Skeleton className="h-[84px] w-[118px] mx-auto" />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   )
 }
-
-// export default function ProfileInfoWrapper({
-//   stats,
-//   isStatsLoading
-// }: {
-//   stats: StravaStats | undefined
-//   isStatsLoading: boolean
-// }) {
-//   return (
-//     <ProfileErrorBoundary>
-//       <ProfileInfo stats={stats} isStatsLoading={isStatsLoading} />
-//     </ProfileErrorBoundary>
-//   )
-// }
 
 // 메달 컴포넌트 추가
 export function MedalProfile({
